@@ -1,6 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Tr from "./Tr";
+
+const tableDetails = [
+  {
+    id: 1,
+    Name : 'Person 1',
+    Position: 'Manager',
+    Office: 'Chennai',
+    Age: '45',
+    StartDate: '12/05/2021',
+    Salary: '60000'
+  },
+  {
+    id: 2,
+    Name  : 'Person 2',
+    Position: 'Manager',
+    Office: 'Chennai',
+    Age: '45',
+    StartDate: '12/05/2021',
+    Salary: '60000'
+  },
+  {
+    id: 3,
+    Name : 'Person 3',
+    Position: 'Manager',
+    Office: 'Chennai',
+    Age: '45',
+    StartDate: '12/05/2021',
+    Salary: '60000'
+  },
+]
 
 function Table() {
   return (
@@ -41,6 +70,7 @@ function Table() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
+                  <th>Controls</th>
                 </tr>
               </thead>
               <tfoot>
@@ -51,11 +81,27 @@ function Table() {
                   <th>Age</th>
                   <th>Start date</th>
                   <th>Salary</th>
+                  <th>Controls</th>
                 </tr>
               </tfoot>
               <tbody>
-                <Tr />
-                <Tr />
+                {tableDetails.map((detail)=>{
+                  return(<tr>
+                    <td>{detail.Name}</td>
+                    <td>{detail.Position}</td>
+                    <td>{detail.Office}</td>
+                    <td>{detail.Age}</td>
+                    <td>{detail.StartDate}</td>
+                    <td>{detail.Salary}</td>
+                    <td>
+                      <Link to={`/table/${detail.id}`} className="btn btn-lg-2 mr-2 btn-primary">View</Link>
+                      <Link to={`/table/${detail.id}`} className="btn btn-lg-2 mr-2 btn-success">Edit</Link>
+                      <button className="btn btn-lg-2 mr-2 btn-warning">Delete</button>
+                    </td>
+                  </tr>)
+                
+                })}
+                
               </tbody>
             </table>
           </div>

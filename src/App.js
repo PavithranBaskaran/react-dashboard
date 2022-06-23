@@ -1,13 +1,16 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
 import Table from "./Table";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom/client"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Product from "./Product";
 import AddUser from "./AddUser";
 import AddProduct from "./AddProduct";
+import ViewUser from "./ViewUser";
+import Viewproduct from "./Viewproduct";
 
 
 
@@ -27,6 +30,8 @@ function App() {
                   <Route path="/product" element={<Product />} />
                   <Route path="/table/adduser" element={<AddUser />} />
                   <Route path="/table/addproduct" element={<AddProduct />} />
+                  <Route path='/table/:id' element={<ViewUser/>}/>
+                  <Route path='product/:id' element={<Viewproduct/>}/>
                 </Routes>
               </div>
             </div>
