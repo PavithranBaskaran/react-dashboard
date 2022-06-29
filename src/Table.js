@@ -1,37 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const tableDetails = [
-  {
-    id: 1,
-    Name : 'Person 1',
-    Position: 'Manager',
-    Office: 'Chennai',
-    Age: '45',
-    StartDate: '12/05/2021',
-    Salary: '60000'
-  },
-  {
-    id: 2,
-    Name  : 'Person 2',
-    Position: 'Manager',
-    Office: 'Chennai',
-    Age: '45',
-    StartDate: '12/05/2021',
-    Salary: '60000'
-  },
-  {
-    id: 3,
-    Name : 'Person 3',
-    Position: 'Manager',
-    Office: 'Chennai',
-    Age: '45',
-    StartDate: '12/05/2021',
-    Salary: '60000'
-  },
-]
+import axios from "axios";
+// const tableDetails = [
+//   {
+//     id: 1,
+//     Name : 'Person 1',
+//     Position: 'Manager',
+//     Office: 'Chennai',
+//     Age: '45',
+//     StartDate: '12/05/2021',
+//     Salary: '60000'
+//   },
+//   {
+//     id: 2,
+//     Name  : 'Person 2',
+//     Position: 'Manager',
+//     Office: 'Chennai',
+//     Age: '45',
+//     StartDate: '12/05/2021',
+//     Salary: '60000'
+//   },
+//   {
+//     id: 3,
+//     Name : 'Person 3',
+//     Position: 'Manager',
+//     Office: 'Chennai',
+//     Age: '45',
+//     StartDate: '12/05/2021',
+//     Salary: '60000'
+//   },
+// ]
 
 function Table() {
+  const [tableDetails , settable] = useState([])
+  useEffect(() =>{
+   
+    fetchData()
+  },
+  [])
+  let fetchData = async() => {
+    let userData =  await axios.get('https://628f15bbdc4785236538febb.mockapi.io/users');
+   console.log(userData.data)
+   settable(userData.data)
+  }
+  let handleDelete = async(id) => {
+    let ask = window.confirm(`Do you want to delete ${tableDetails[id-1].name}`);
+    if(ask){
+     await axios.delete(`https://628f15bbdc4785236538febb.mockapi.io/users/${id}`)
+     fetchData()
+    }
+  }
   return (
     <>
       <h1 class="h3 mb-2 text-gray-800">Tables</h1>
@@ -44,9 +62,7 @@ function Table() {
       <p class="mb-4">
         DataTables is a third party plugin that is used to generate the demo
         table below. For more information about DataTables, please visit the{" "}
-        <a target="_blank" href="https://datatables.net">
-          official DataTables documentation
-        </a>
+        
         .
       </p>
 
@@ -87,16 +103,16 @@ function Table() {
               <tbody>
                 {tableDetails.map((detail)=>{
                   return(<tr>
-                    <td>{detail.Name}</td>
-                    <td>{detail.Position}</td>
-                    <td>{detail.Office}</td>
-                    <td>{detail.Age}</td>
-                    <td>{detail.StartDate}</td>
-                    <td>{detail.Salary}</td>
+                    <td>{detail.name}</td>
+                    <td>{detail.position}</td>
+                    <td>{detail.office}</td>
+                    <td>{detail.age}</td>
+                    <td>{detail.startDate}</td>
+                    <td>{detail.salary}</td>
                     <td>
-                      <Link to={`/table/${detail.id}`} className="btn btn-lg-2 mr-2 btn-primary">View</Link>
-                      <Link to={`/table/${detail.id}`} className="btn btn-lg-2 mr-2 btn-success">Edit</Link>
-                      <button className="btn btn-lg-2 mr-2 btn-warning">Delete</button>
+                      <Link to={`/table/view/${detail.id}`} className="btn btn-lg-2 mr-2 btn-primary">View</Link>
+                      <Link to={`/table/edit/${detail.id}`} className="btn btn-lg-2 mr-2 btn-success">Edit</Link>
+                      <button onClick={()=>handleDelete(detail.id)} className="btn btn-lg-2 mr-2 btn-warning">Delete</button>
                     </td>
                   </tr>)
                 
